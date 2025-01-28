@@ -1,5 +1,7 @@
 package com.demo.utilities;
 
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.OpenTelemetry;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -22,6 +24,7 @@ public class Driver {
     public static WebDriver getDriver(){
         if(driver == null){
             String browserType = System.getProperty("browser") !=null?System.getProperty("browser"): ConfigurationReader.getProperty("browser");
+            String gridUrl = System.getProperty("GRID_URL")!=null?ConfigurationReader.getProperty("local.grid"): ConfigurationReader.getProperty("grid.url");
             switch (browserType){
                 case "chrome":
                     driver=new ChromeDriver();
@@ -75,7 +78,7 @@ public class Driver {
                     remoteOptions.addArguments("--start-maximized");
                     //remoteOptions.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu");
                     try {
-                        driver = new RemoteWebDriver(new URL("http://54.89.147.119:4444/wd/hub"), remoteOptions);
+                        driver = new RemoteWebDriver(new URL(gridUrl+"/wd/hub"), remoteOptions);
                     } catch (MalformedURLException e) {
 
                     }
@@ -85,7 +88,7 @@ public class Driver {
                     FirefoxOptions firefoxOptions1 = new FirefoxOptions();
                     firefoxOptions1.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu");
                     try {
-                        driver = new RemoteWebDriver(new URL("http://54.89.147.119:4444/wd/hub"), firefoxOptions1);
+                        driver = new RemoteWebDriver(new URL(gridUrl+"/wd/hub"), firefoxOptions1);
                     } catch (MalformedURLException e) {
 
                     }
