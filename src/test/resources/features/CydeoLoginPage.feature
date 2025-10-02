@@ -2,7 +2,7 @@
 Feature: User should be able to login the Cydeo application
 
 
-  @validLogin
+  @validLogin @CRITICAL
   Scenario: User should be able to login the application with valid credentials
     Given User is on the login page
     When User enters the valid username
