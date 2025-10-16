@@ -25,10 +25,27 @@ public class Driver {
 
     public static WebDriver getDriver(){
         if(driverPool.get() == null){
-            String browserType = System.getProperty("browser") !=null?System.getProperty("browser"): ConfigurationReader.getProperty("browser");
-            String gridUrl = System.getProperty("GRID_URL")!=null?ConfigurationReader.getProperty("local.grid"): ConfigurationReader.getProperty("aws.grid.url");
-            System.out.println(gridUrl + " ------------------ grid URL");
-            // String gridUrl = ConfigurationReader.getProperty("grid.url");
+            String typeFromTerminal = System.getProperty("browser");
+
+            System.out.println("typeFromTerminal = " + typeFromTerminal);
+
+            String browserType =  typeFromTerminal!=null
+                    ?System.getProperty("browser")
+                    :ConfigurationReader.getProperty("browser");
+
+            System.out.println("browserType = " + browserType);
+            String gridUrl =null;
+
+            /*
+             gridUrl = System.getProperty("GRID_URL")!=null
+                    ?ConfigurationReader.getProperty("local.grid")
+                    :ConfigurationReader.getProperty("aws.grid.url");
+
+
+             */
+
+           // System.out.println(gridUrl + " ------------------ grid URL");
+             gridUrl = ConfigurationReader.getProperty("aws.grid.url");
             switch (browserType){
                 case "chrome" -> {
                     ChromeOptions options = new ChromeOptions();
